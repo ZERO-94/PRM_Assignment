@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InstrumentDetail">
+
+    <ImageView
+        android:id="@+id/instrumentImageView"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="TextView"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/instrumentImageView" />
+
+    <TextView
+        android:id="@+id/codeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="16dp"
+        android:text="InstrumentCode"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/priceTextView"
+        app:layout_constraintStart_toEndOf="@+id/codeHeader" />
+
+    <TextView
+        android:id="@+id/amountTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:text="InstrumentAmount"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/amountHeader"
+        app:layout_constraintStart_toEndOf="@+id/amountHeader" />
+
+    <TextView
+        android:id="@+id/priceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="15dp"
+        android:text="InstrumentPrice"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/amountTextView"
+        app:layout_constraintStart_toEndOf="@+id/priceHeader2" />
+
+    <TextView
+        android:id="@+id/amountHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Amount:"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/editButton"
+        app:layout_constraintEnd_toEndOf="@+id/editButton"
+        app:layout_constraintStart_toEndOf="@+id/editButton" />
+
+    <TextView
+        android:id="@+id/codeHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Code:"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/codeTextView"
+        app:layout_constraintStart_toStartOf="@+id/priceHeader2" />
+
+    <TextView
+        android:id="@+id/priceHeader2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price:"
+        android:textSize="18sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/priceTextView"
+        app:layout_constraintStart_toStartOf="@+id/amountHeader" />
+
+    <Button
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="12dp"
+        android:text="Edit"
+        app:layout_constraintBottom_toTopOf="@+id/goBackButton"
+        app:layout_constraintEnd_toStartOf="@+id/goBackButton" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="19dp"
+        android:layout_marginTop="17dp"
+        android:onClick="onDelete"
+        android:text="Delete"
+        app:layout_constraintStart_toEndOf="@+id/goBackButton"
+        app:layout_constraintTop_toBottomOf="@+id/amountTextView" />
+
+    <Button
+        android:id="@+id/goBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="41dp"
+        android:onClick="onGoBack"
+        android:text="Go back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

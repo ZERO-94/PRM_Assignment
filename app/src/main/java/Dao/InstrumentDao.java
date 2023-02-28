@@ -29,8 +29,10 @@ public class InstrumentDao {
             String code = cs.getString(0);
             String name = cs.getString(1);
             String imageUrl = cs.getString(2);
+            int price = cs.getInt(3);
+            int amount = cs.getInt(4);
 
-            data.add(new Instrument(code, name, imageUrl));
+            data.add(new Instrument(code, name, imageUrl, price, amount));
             cs.moveToNext();
         }
 
@@ -42,6 +44,9 @@ public class InstrumentDao {
         ContentValues values = new ContentValues();
         values.put("code", newClassRoom.getCode());
         values.put("name", newClassRoom.getName());
+        values.put("imageUrl", newClassRoom.getImageUrl());
+        values.put("price", newClassRoom.getPrice());
+        values.put("amount", newClassRoom.getAmount());
 
         long row = db.insert("Instrument", null, values);
         return row > 0;
@@ -52,6 +57,9 @@ public class InstrumentDao {
         ContentValues values = new ContentValues();
 
         values.put("name", updateClassRoom.getName());
+        values.put("imageUrl", updateClassRoom.getImageUrl());
+        values.put("price", updateClassRoom.getPrice());
+        values.put("amount", updateClassRoom.getAmount());
 
         long row = db.update("Instrument", values, "code=?", new String[] {updateClassRoom.getCode()});
         return row > 0;

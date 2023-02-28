@@ -2,6 +2,7 @@ package Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +13,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.HomeActivity;
+import com.example.myapplication.InstrumentDetail;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
 import Dao.InstrumentDao;
 import Models.Instrument;
+import Utils.DownloadImageTask;
 
 public class InstrumentAdapter extends RecyclerView.Adapter<InstrumentAdapter.ViewHolder> {
 
@@ -41,8 +45,10 @@ public class InstrumentAdapter extends RecyclerView.Adapter<InstrumentAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         Instrument instrument = data.get(position);
-        viewHolder.textView_name.setText(instrument.getName());
-        viewHolder.imageView.setImageResource(R.drawable.guitar);
+        viewHolder.instrumentCode = instrument.getCode();
+        viewHolder.textView_name.setText(instrument.getCode());
+        new DownloadImageTask(viewHolder.imageView)
+                .execute(instrument.getImageUrl());
     }
 
     @Override
@@ -51,14 +57,21 @@ public class InstrumentAdapter extends RecyclerView.Adapter<InstrumentAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        String instrumentCode;
         TextView textView_name;
         ImageView imageView;
+        Button detailButton;
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             textView_name = itemView.findViewById(R.id.textView_name);
             imageView = itemView.findViewById(R.id.imageView);
+            detailButton = itemView.findViewById(R.id.viewDetailButton);
+            detailButton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, InstrumentDetail.class);
+                intent.putExtra("instrumentCode", instrumentCode);
+                context.startActivity(intent);
+            });
         }
     }
 }

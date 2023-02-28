@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -59,6 +58,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.option_logout:
                 onLogout();
                 return true;
+            case R.id.option_create:
+                onCreate();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -66,6 +68,11 @@ public class HomeActivity extends AppCompatActivity {
 
     public void onLogout() {
         Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void onCreate() {
+        Intent intent = new Intent(HomeActivity.this, CreateActivity.class);
         startActivity(intent);
     }
 }

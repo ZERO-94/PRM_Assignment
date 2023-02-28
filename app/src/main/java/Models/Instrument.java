@@ -4,11 +4,15 @@ public class Instrument {
     String code;
     String name;
     String imageUrl;
+    int price;
+    int amount;
 
-    public Instrument(String code, String name, String imageUrl) {
+    public Instrument(String code, String name, String imageUrl, int price, int amount) {
         this.code = code;
         this.name = name;
         this.imageUrl = imageUrl;
+        this.price = price;
+        this.amount = amount;
     }
 
     public String getCode() {
@@ -33,5 +37,21 @@ public class Instrument {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 }
