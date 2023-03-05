@@ -64,6 +64,12 @@ public class InstrumentDetail extends AppCompatActivity {
         }
     }
 
+    public void onEdit(View view) {
+        Intent intent = new Intent(InstrumentDetail.this, CreateActivity.class);
+        intent.putExtra("instrumentCode", instrumentCode);
+        startActivity(intent);
+    }
+
     public void onDelete(View view) {
         dao.delete(instrumentCode);
         Intent intent = new Intent(InstrumentDetail.this, HomeActivity.class);
