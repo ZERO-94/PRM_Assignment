@@ -17,7 +17,7 @@ import Models.Instrument;
 
 public class CreateActivity extends AppCompatActivity {
 
-    private EditText editTextName, editTextCode, editTextPrice, editTextAmount, editTextImage;
+    private EditText editTextName, editTextCode, editTextPrice, editTextAmount, editTextImage, editTextSound;
     private TextView actionTextView;
     InstrumentDao dao;
     private String instrumentCode;
@@ -40,6 +40,7 @@ public class CreateActivity extends AppCompatActivity {
         editTextAmount = findViewById(R.id.editTextAmount);
         editTextImage = findViewById(R.id.editTextImageUrl);
         actionTextView = findViewById(R.id.actionTextView);
+        editTextSound = findViewById(R.id.editTextSound);
 
         if(instrumentCode != null) {
             List<Instrument> data = dao.getAll();
@@ -59,6 +60,7 @@ public class CreateActivity extends AppCompatActivity {
                 editTextPrice.setText(String.valueOf(instrument.getPrice()));
                 editTextAmount.setText(String.valueOf(instrument.getAmount()));
                 editTextImage.setText(instrument.getImageUrl());
+                editTextSound.setText(instrument.getSound());
             }
         }
     }
@@ -69,13 +71,13 @@ public class CreateActivity extends AppCompatActivity {
         int price = Integer.valueOf(editTextPrice.getText().toString());
         int amount = Integer.valueOf(editTextAmount.getText().toString());
         String imageUrl = editTextImage.getText().toString();
+        String sound = editTextSound.getText().toString();
 
-        Instrument instrument = new Instrument(code, name, imageUrl, price, amount);
+        Instrument instrument = new Instrument(code, name, imageUrl, price, amount, sound);
         if(instrumentCode == null)
             dao.create(instrument);
         else
             dao.update(instrument);
-        Intent intent = new Intent(CreateActivity.this, HomeActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

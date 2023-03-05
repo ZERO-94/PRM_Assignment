@@ -3,11 +3,16 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -22,6 +27,8 @@ public class InstrumentDetail extends AppCompatActivity {
     InstrumentDao dao;
     String instrumentCode;
     ArrayList<Instrument> data = new ArrayList<>();
+    MediaPlayer mediaPlayer;
+    String sound = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
     public InstrumentDetail() {
 
@@ -54,6 +61,7 @@ public class InstrumentDetail extends AppCompatActivity {
             }
 
             if(instrument != null) {
+                sound = instrument.getSound();
                 codeTextView.setText(instrument.getCode());
                 nameTextView.setText(instrument.getName());
                 priceTextView.setText(String.valueOf(instrument.getPrice()));
@@ -72,12 +80,40 @@ public class InstrumentDetail extends AppCompatActivity {
 
     public void onDelete(View view) {
         dao.delete(instrumentCode);
-        Intent intent = new Intent(InstrumentDetail.this, HomeActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     public void onGoBack(View view) {
-        Intent intent = new Intent(InstrumentDetail.this, HomeActivity.class);
-        startActivity(intent);
+        finish();
+    }
+
+    public void onTestSound(View view) {
+        if(mediaPlayer == null ){
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioAttributes(new AudioAttributes
+                    .Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .build());
+            try {
+                mediaPlayer.setDataSource(sound);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, "Audio started playing..", Toast.LENGTH_SHORT).show();
+        } else {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.reset();
+                mediaPlayer.release();
+                mediaPlayer = null;
+                Toast.makeText(this,"Audio has been paused", Toast.LENGTH_SHORT).show();
+            } else {
+                mediaPlayer = null;
+                Toast.makeText(this,"Audio has not played", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }
