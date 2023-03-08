@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import Adapter.InstrumentAdapter;
+import Contexts.AuthContext;
 import Dao.InstrumentDao;
 import Models.Instrument;
 
@@ -27,11 +28,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        if(getIntent() != null) {
-            Intent intent = getIntent();
-            System.out.println(intent.getStringExtra("username"));
-        }
 
         listView = findViewById(R.id.lv);
         instrumentDao = new InstrumentDao(HomeActivity.this);
@@ -48,6 +44,10 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        if(AuthContext.getRole().equals("customer"))
+            menu.removeItem(R.id.option_create);
+        else if(AuthContext.getRole().equals("admin"))
+            menu.removeItem(R.id.option_cart);
         return true;
     }
 
@@ -61,18 +61,27 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.option_create:
                 onCreate();
                 return true;
+            case R.id.option_cart:
+                onCart();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
     public void onLogout() {
+        AuthContext.removeUser();
         Intent intent = new Intent(HomeActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
     public void onCreate() {
         Intent intent = new Intent(HomeActivity.this, CreateActivity.class);
+        startActivity(intent);
+    }
+
+    public void onCart() {
+        Intent intent = new Intent(HomeActivity.this, CartActivity.class);
         startActivity(intent);
     }
 }

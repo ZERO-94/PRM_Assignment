@@ -19,7 +19,10 @@ import com.example.myapplication.R;
 
 import java.util.ArrayList;
 
+import Contexts.AuthContext;
+import Contexts.CartContext;
 import Dao.InstrumentDao;
+import Models.CartItem;
 import Models.Instrument;
 import Utils.DownloadImageTask;
 
@@ -67,11 +70,25 @@ public class InstrumentAdapter extends RecyclerView.Adapter<InstrumentAdapter.Vi
             textView_name = itemView.findViewById(R.id.textView_name);
             imageView = itemView.findViewById(R.id.imageView);
             detailButton = itemView.findViewById(R.id.viewDetailButton);
-            detailButton.setOnClickListener(v -> {
-                Intent intent = new Intent(context, InstrumentDetail.class);
-                intent.putExtra("instrumentCode", instrumentCode);
-                context.startActivity(intent);
-            });
+            if(AuthContext.getRole().equals("customer")) {
+                detailButton.setText("Add to Cart");
+                detailButton.setOnClickListener(v -> {
+                    for(Instrument i: dao.getAll()) {
+                        if(i.getCode().equals(instrumentCode)) {
+                            CartItem item = new CartItem(instrumentCode, i.getName(), i.getImageUrl(), i.getPrice(), 1);
+                            CartContext.addItem(item);
+                        }
+                    }
+
+                });
+            } else {
+                detailButton.setText("View detail");
+                detailButton.setOnClickListener(v -> {
+                    Intent intent = new Intent(context, InstrumentDetail.class);
+                    intent.putExtra("instrumentCode", instrumentCode);
+                    context.startActivity(intent);
+                });
+            }
         }
     }
 }
